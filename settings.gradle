@@ -1,2 +1,3 @@
+include ':cake'
 include ':app'
 rootProject.name = "common-android-kotlin-extensions"
