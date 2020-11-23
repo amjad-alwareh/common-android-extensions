@@ -1,16 +1,8 @@
 package com.amjadalwareh.cake
 
-import android.app.DownloadManager
-import android.content.Context
-import android.net.Uri
-import android.os.Build
-import android.os.Environment
 import android.util.Patterns
-import com.amjadalwareh.cake.ContextKt.checkApi
-import com.amjadalwareh.cake.ContextKt.manager
 import com.amjadalwareh.cake.Utils.hashWithAlgorithm
 import com.amjadalwareh.cake.Utils.match
-import java.util.*
 
 object StringKt {
 
@@ -49,14 +41,8 @@ object StringKt {
      */
     fun String.applySHA256(): String = hashWithAlgorithm(Utils.HashType.SHA256)
 
-    fun String.download(context: Context): Long {
-        if (!this.isValidUrl()) return 0L
-        if (!context.checkApi(Build.VERSION_CODES.M)) return -1L
-        val manager = context.manager<DownloadManager>()
-        val request = DownloadManager.Request(Uri.parse(this))
-        request.setTitle("Attachment");
-        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "Attachment");
-        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-        return manager.enqueue(request)
+    fun String.removeVowels(): String {
+        val vowels = setOf('a', 'e', 'i', 'o', 'u')
+        return this.filterNot { it in vowels }
     }
 }

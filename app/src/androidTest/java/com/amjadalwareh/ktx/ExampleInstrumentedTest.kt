@@ -4,6 +4,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.amjadalwareh.cake.CollectionKt.isNotNullOrEmpty
 import com.amjadalwareh.cake.DataKt.isNull
+import com.amjadalwareh.cake.DataKt.isPrime
 import com.amjadalwareh.cake.FileKt.size
 import com.amjadalwareh.cake.StringKt.applyMD5
 import com.amjadalwareh.cake.StringKt.applySHA1
@@ -71,5 +72,10 @@ class ExampleInstrumentedTest {
         temp.writeText("AMJAD ALWAREH")
         assertNotEquals(temp.size, 0.0)
         temp.deleteOnExit()
+    }
+
+    @Test
+    fun test_testIsPrime() {
+        assertEquals(3.isPrime, true)
     }
 }

@@ -6,14 +6,11 @@ import android.graphics.Typeface
 import android.text.style.StyleSpan
 import android.text.style.UnderlineSpan
 import android.view.View
-import android.view.animation.AccelerateInterpolator
-import android.view.animation.AlphaAnimation
-import android.view.animation.Animation
-import android.view.animation.DecelerateInterpolator
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
 import androidx.annotation.StringRes
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.amjadalwareh.cake.ContextKt.animation
@@ -23,9 +20,7 @@ import com.amjadalwareh.cake.Utils.applySpan
 import com.amjadalwareh.cake.Utils.calculateScreen
 import com.amjadalwareh.cake.Utils.changeVisibility
 import com.amjadalwareh.cake.Utils.snackbar
-import com.amjadalwareh.cake.ViewKt.fadeIn
-import com.amjadalwareh.cake.ViewKt.fadeOut
-
+import com.amjadalwareh.cake.ViewKt.linear
 
 object ViewKt {
 
@@ -89,21 +84,21 @@ object ViewKt {
     }
 
     /**
-     *
+     * Apply fade in animation to a view.
      */
     fun View.fadeIn() {
         this.startAnimation(context.animation(R.anim.fade_in))
     }
 
     /**
-     *
+     * Apply fade out animation to a view.
      */
     fun View.fadeOut() {
-        this.startAnimation(context.animation(R.anim.push_out_bottm))
+        this.startAnimation(context.animation(R.anim.fade_out))
     }
 
     /**
-     *
+     * Apply glow animation to a view.
      */
     fun View.glow() {
         this.startAnimation(context.animation(R.anim.glow))
@@ -126,31 +121,15 @@ object ViewKt {
     /**
      * Show [com.google.android.material.snackbar.Snackbar] and a function button
      */
-    fun View.showSnackbar(
-        text: String,
-        shortDuration: Boolean = true,
-        button: String,
-        func: () -> Unit
-    ) {
+    fun View.showSnackbar(text: String, shortDuration: Boolean = true, button: String, func: () -> Unit) {
         snackbar(this, text, shortDuration, button, func)
     }
 
     /**
      * Show [com.google.android.material.snackbar.Snackbar] and a function button
      */
-    fun View.showSnackbar(
-        @StringRes text: Int,
-        shortDuration: Boolean = true,
-        @StringRes button: Int,
-        func: () -> Unit
-    ) {
-        snackbar(
-            this,
-            this.context.getString(text),
-            shortDuration,
-            this.context.getString(button),
-            func
-        )
+    fun View.showSnackbar(@StringRes text: Int, shortDuration: Boolean = true, @StringRes button: Int, func: () -> Unit) {
+        snackbar(this, this.context.getString(text), shortDuration, this.context.getString(button), func)
     }
 
     /**
@@ -196,6 +175,9 @@ object ViewKt {
      */
     fun EditText.text(): String = this.text.toString()
 
+    /**
+     * Call [func] when reach the end of the recyclerview
+     */
     fun RecyclerView.listenScroll(func: () -> Unit) {
         addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -211,4 +193,13 @@ object ViewKt {
             }
         })
     }
+
+    fun RecyclerView.linear(@RecyclerView.Orientation orientation: Int = RecyclerView.VERTICAL, reverse: Boolean = false) {
+        this.layoutManager = LinearLayoutManager(this.context, orientation, reverse)
+    }
+
+    fun RecyclerView.grid(spansCount: Int = 2, @RecyclerView.Orientation orientation: Int = RecyclerView.VERTICAL, reverse: Boolean = false) {
+        this.layoutManager = GridLayoutManager(this.context, spansCount, orientation, reverse)
+    }
+
 }
