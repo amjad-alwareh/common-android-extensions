@@ -1,5 +1,6 @@
 package com.amjadalwareh.cake
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.*
 import android.app.job.JobScheduler
@@ -14,9 +15,12 @@ import android.location.LocationManager
 import android.media.AudioManager
 import android.media.MediaRouter
 import android.net.ConnectivityManager
+import android.net.Uri
 import android.net.wifi.WifiManager
 import android.os.*
 import android.os.storage.StorageManager
+import android.provider.Settings
+import android.provider.Settings.*
 import android.telephony.CarrierConfigManager
 import android.telephony.SubscriptionManager
 import android.telephony.TelephonyManager
@@ -28,9 +32,13 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.*
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
+import com.amjadalwareh.cake.StringKt.isValidUrl
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
+
 
 object ContextKt {
 
@@ -81,6 +89,11 @@ object ContextKt {
     fun Context.shortToast(string: String) {
         Utils.toast(this, string)
     }
+
+    /**
+     * Check if @param [permission] is granted or not
+     */
+    fun Context.isGranted(permission: String): Boolean = ActivityCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
 
     /**
      * Get the hash key of your app.
@@ -143,16 +156,73 @@ object ContextKt {
      */
     fun Context.boolean(@BoolRes id: Int): Boolean = this.resources.getBoolean(id)
 
-    fun Context.share() {
+    val Context.batteryPercentage: Int
+        get() = manager<BatteryManager>().getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY)
 
+    val Context.batterySaverEnable: Boolean
+        get() = manager<PowerManager>().isPowerSaveMode
+
+    fun Context.share(title: String, uriToImage: Uri) {
+        val shareIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_STREAM, uriToImage)
+            type = "image/jpeg"
+        }
+        startActivity(Intent.createChooser(shareIntent, title))
     }
 
-    fun Context.call() {
+    fun Context.share(text: String) {
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, text)
+            type = "text/plain"
+        }
 
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        startActivity(shareIntent)
     }
 
-    fun Context.browse() {
+    fun Context.makeCall(mobilePhone: String) {
+        if (!isGranted(Manifest.permission.CALL_PHONE)) return
+        startActivity(Intent(Intent.ACTION_CALL, Uri.parse("tel:$mobilePhone")))
+    }
 
+    fun Context.call(mobilePhone: String) {
+        startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:$mobilePhone")))
+    }
+
+    fun Context.browse(url: String) {
+        if (!url.isValidUrl()) return
+        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+    }
+
+    fun Context.settings() {
+        startActivity(Intent(Settings.ACTION_SETTINGS))
+    }
+
+    fun Context.pickWifi() {
+        if (checkApi(Build.VERSION_CODES.Q)) startActivity(Intent(Settings.Panel.ACTION_WIFI))
+        else startActivity(Intent(WifiManager.ACTION_PICK_WIFI_NETWORK));
+    }
+
+    fun Context.mobile() {
+        startActivity(Intent(ACTION_DATA_ROAMING_SETTINGS))
+    }
+
+    fun Context.volume() {
+        doIfApi(Build.VERSION_CODES.Q) { startActivity(Intent(Settings.Panel.ACTION_VOLUME)) }
+    }
+
+    fun Context.displaySettings() {
+        startActivity(Intent(Settings.ACTION_DISPLAY_SETTINGS));
+    }
+
+    fun Context.locationSettings() {
+        startActivity(Intent(ACTION_LOCATION_SOURCE_SETTINGS))
+    }
+
+    fun Context.appSettings(packageName: String) {
+        startActivity(Intent(ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:$packageName")))
     }
 
     /**
