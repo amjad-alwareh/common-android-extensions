@@ -3,6 +3,7 @@ package com.amjadalwareh.cake
 import android.util.Patterns
 import com.amjadalwareh.cake.Utils.hashWithAlgorithm
 import com.amjadalwareh.cake.Utils.match
+import java.util.*
 
 object StringKt {
 
@@ -43,6 +44,6 @@ object StringKt {
 
     fun String.removeVowels(): String {
         val vowels = setOf('a', 'e', 'i', 'o', 'u')
-        return this.filterNot { it in vowels }
+        return this.toLowerCase(Locale.getDefault()).filterNot { it in vowels }
     }
 }

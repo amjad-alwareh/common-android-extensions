@@ -33,12 +33,10 @@ import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.*
 import androidx.core.app.ActivityCompat
-import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
 import com.amjadalwareh.cake.StringKt.isValidUrl
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
-
 
 object ContextKt {
 
@@ -201,7 +199,7 @@ object ContextKt {
     }
 
     fun Context.pickWifi() {
-        if (checkApi(Build.VERSION_CODES.Q)) startActivity(Intent(Settings.Panel.ACTION_WIFI))
+        if (checkApi(Build.VERSION_CODES.Q)) startActivity(Intent(Panel.ACTION_WIFI))
         else startActivity(Intent(WifiManager.ACTION_PICK_WIFI_NETWORK));
     }
 
@@ -210,11 +208,11 @@ object ContextKt {
     }
 
     fun Context.volume() {
-        doIfApi(Build.VERSION_CODES.Q) { startActivity(Intent(Settings.Panel.ACTION_VOLUME)) }
+        doIfApi(Build.VERSION_CODES.Q) { startActivity(Intent(Panel.ACTION_VOLUME)) }
     }
 
     fun Context.displaySettings() {
-        startActivity(Intent(Settings.ACTION_DISPLAY_SETTINGS));
+        startActivity(Intent(Settings.ACTION_DISPLAY_SETTINGS))
     }
 
     fun Context.locationSettings() {
