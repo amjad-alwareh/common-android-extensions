@@ -2,6 +2,7 @@ package com.amjadalwareh.cake
 
 import android.app.Activity
 import android.content.Context
+import android.content.pm.PackageManager
 import android.graphics.Insets
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
@@ -18,6 +19,7 @@ import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
+import com.amjadalwareh.cake.ContextKt.manager
 import com.amjadalwareh.cake.ViewKt.italic
 import com.google.android.material.snackbar.Snackbar
 import java.math.BigDecimal
@@ -81,4 +83,6 @@ object Utils {
         text.setSpan(StyleSpan(Typeface.ITALIC), 0, text.length, 0)
         textView.text = text
     }
+
+    fun hasSystemFeature(context: Context, featureName: String): Boolean = context.manager<PackageManager>().hasSystemFeature(featureName)
 }

@@ -35,6 +35,7 @@ import androidx.annotation.*
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.amjadalwareh.cake.ContextKt.hasCamera
 import com.amjadalwareh.cake.StringKt.isValidUrl
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
@@ -239,6 +240,62 @@ object ContextKt {
     fun Context.appSettings(packageName: String) {
         startActivity(Intent(ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:$packageName")))
     }
+
+    fun Context.hasFeature(featureName: String): Boolean = Utils.hasSystemFeature(this, featureName)
+
+    fun Context.hasCamera(): Boolean = Utils.hasSystemFeature(this, PackageManager.FEATURE_CAMERA)
+
+    fun Context.hasCameraAutoFocus(): Boolean = Utils.hasSystemFeature(this, PackageManager.FEATURE_CAMERA_AUTOFOCUS)
+
+    fun Context.hasAnyCamera(): Boolean = Utils.hasSystemFeature(this, PackageManager.FEATURE_CAMERA_ANY)
+
+    fun Context.hasCameraFront(): Boolean = Utils.hasSystemFeature(this, PackageManager.FEATURE_CAMERA_FRONT)
+
+    fun Context.hasCameraFlash(): Boolean = Utils.hasSystemFeature(this, PackageManager.FEATURE_CAMERA_FLASH)
+
+    fun Context.hasAudioOutput(): Boolean = Utils.hasSystemFeature(this, PackageManager.FEATURE_AUDIO_OUTPUT)
+
+    fun Context.hasBluetooth(): Boolean = Utils.hasSystemFeature(this, PackageManager.FEATURE_BLUETOOTH)
+
+    fun Context.hasLocation(): Boolean = Utils.hasSystemFeature(this, PackageManager.FEATURE_LOCATION)
+
+    fun Context.hasLocationGPS(): Boolean = Utils.hasSystemFeature(this, PackageManager.FEATURE_LOCATION_GPS)
+
+    fun Context.hasLocationNetwork(): Boolean = Utils.hasSystemFeature(this, PackageManager.FEATURE_LOCATION_NETWORK)
+
+    fun Context.hasNfc(): Boolean = Utils.hasSystemFeature(this, PackageManager.FEATURE_CAMERA)
+
+    fun Context.hasMic(): Boolean = Utils.hasSystemFeature(this, PackageManager.FEATURE_MICROPHONE)
+
+    fun Context.hasAccelerometer(): Boolean = Utils.hasSystemFeature(this, PackageManager.FEATURE_SENSOR_ACCELEROMETER)
+
+    fun Context.hasBarometer(): Boolean = Utils.hasSystemFeature(this, PackageManager.FEATURE_SENSOR_BAROMETER)
+
+    fun Context.hasCompass(): Boolean = Utils.hasSystemFeature(this, PackageManager.FEATURE_SENSOR_COMPASS)
+
+    fun Context.hasGyroscope(): Boolean = Utils.hasSystemFeature(this, PackageManager.FEATURE_SENSOR_GYROSCOPE)
+
+    fun Context.hasLightSensor(): Boolean = Utils.hasSystemFeature(this, PackageManager.FEATURE_SENSOR_LIGHT)
+
+    fun Context.hasProximity(): Boolean = Utils.hasSystemFeature(this, PackageManager.FEATURE_SENSOR_PROXIMITY)
+
+    fun Context.hasStepCounter(): Boolean = Utils.hasSystemFeature(this, PackageManager.FEATURE_SENSOR_STEP_COUNTER)
+
+    fun Context.hasStepDetector(): Boolean = Utils.hasSystemFeature(this, PackageManager.FEATURE_SENSOR_STEP_DETECTOR)
+
+    fun Context.hasHeartRate(): Boolean = Utils.hasSystemFeature(this, PackageManager.FEATURE_SENSOR_HEART_RATE)
+
+    fun Context.hasTemperature(): Boolean = Utils.hasSystemFeature(this, PackageManager.FEATURE_SENSOR_AMBIENT_TEMPERATURE)
+
+    fun Context.hasTelephony(): Boolean = Utils.hasSystemFeature(this, PackageManager.FEATURE_TELEPHONY)
+
+    fun Context.hasWifi(): Boolean = Utils.hasSystemFeature(this, PackageManager.FEATURE_WIFI)
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    fun Context.hasFingerprint(): Boolean = Utils.hasSystemFeature(this, PackageManager.FEATURE_FINGERPRINT)
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    fun Context.hasControls(): Boolean = Utils.hasSystemFeature(this, PackageManager.FEATURE_CONTROLS)
 
     /**
      * Get an instance of required System service.
