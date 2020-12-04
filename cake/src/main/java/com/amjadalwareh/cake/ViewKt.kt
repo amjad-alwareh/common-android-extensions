@@ -31,6 +31,10 @@ object ViewKt {
         changeVisibility(this, View.VISIBLE)
     }
 
+    fun View?.visibleIf(check: () -> Boolean) {
+        if (check()) changeVisibility(this, View.VISIBLE)
+    }
+
     /**
      * Check if view's visibility is [View.VISIBLE]
      */
@@ -41,6 +45,10 @@ object ViewKt {
      */
     fun View?.invisible() {
         changeVisibility(this, View.INVISIBLE)
+    }
+
+    fun View?.invisibleIf(check: () -> Boolean) {
+        if (check()) changeVisibility(this, View.INVISIBLE)
     }
 
     /**
@@ -55,10 +63,19 @@ object ViewKt {
         changeVisibility(this, View.GONE)
     }
 
+    fun View?.goneIf(check: () -> Boolean) {
+        if (check()) changeVisibility(this, View.GONE)
+    }
+
     /**
      * Check if view's visibility is [View.GONE]
      */
     fun View?.isGone(): Boolean = this?.visibility == View.GONE
+
+    fun View.reverseVisibility() {
+        if (this.isGone() || this.isInvisible()) visible()
+        else invisible()
+    }
 
     /**
      * Get screen width in px

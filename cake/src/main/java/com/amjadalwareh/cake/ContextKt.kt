@@ -34,6 +34,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.annotation.*
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.amjadalwareh.cake.StringKt.isValidUrl
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
@@ -86,6 +87,22 @@ object ContextKt {
      */
     fun Context.shortToast(string: String) {
         Utils.toast(this, string)
+    }
+
+    fun Fragment.shortToast(@StringRes string: Int) {
+        Utils.toast(requireContext(), requireContext().getString(string))
+    }
+
+    fun Fragment.longToast(@StringRes string: Int) {
+        Utils.toast(requireContext(), requireContext().getString(string), false)
+    }
+
+    fun Fragment.shortToast(string: String) {
+        Utils.toast(requireContext(), string)
+    }
+
+    fun Fragment.longToast(string: String) {
+        Utils.toast(requireContext(), string, false)
     }
 
     /**

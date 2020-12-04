@@ -4,6 +4,7 @@ import android.util.Patterns
 import com.amjadalwareh.cake.Utils.hashWithAlgorithm
 import com.amjadalwareh.cake.Utils.match
 import java.util.*
+import java.util.regex.Pattern
 
 object StringKt {
 
@@ -26,6 +27,11 @@ object StringKt {
      * Check this String is a phone number
      */
     fun String.isValidPhone(): Boolean = match(Patterns.PHONE, this)
+
+    /**
+     * Check if this string is number
+     */
+    fun String.isNumeric(): Boolean = match(Pattern.compile("^[0-9]+$"), this)
 
     /**
      * Apply MD5 to the given string

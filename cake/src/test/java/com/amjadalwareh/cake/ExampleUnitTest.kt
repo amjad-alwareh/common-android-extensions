@@ -7,6 +7,7 @@ import com.amjadalwareh.cake.DataKt.isNull
 import com.amjadalwareh.cake.DataKt.isPrime
 import com.amjadalwareh.cake.StringKt.applyMD5
 import com.amjadalwareh.cake.StringKt.applySHA1
+import com.amjadalwareh.cake.StringKt.isNumeric
 import com.amjadalwareh.cake.StringKt.removeVowels
 import org.junit.Assert
 import org.junit.Assert.assertEquals
@@ -52,5 +53,10 @@ class ExampleUnitTest {
     @Test
     fun test_testIsPrime() {
         assertEquals(3.isPrime, true)
+    }
+
+    @Test
+    fun test_isNumeric() {
+        assertEquals("123".isNumeric(), true)
     }
 }
