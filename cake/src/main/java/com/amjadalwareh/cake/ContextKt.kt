@@ -63,47 +63,25 @@ object ContextKt {
     }
 
     /**
-     * Show [android.widget.Toast] with long duration.
-     */
-    fun Context.longToast(@StringRes string: Int) {
-        Utils.toast(this, getString(string), false)
-    }
-
-    /**
      * Show [android.widget.Toast] with short duration.
      */
-    fun Context.shortToast(@StringRes string: Int) {
+    fun Context.toast(@StringRes string: Int) {
         Utils.toast(this, getString(string))
-    }
-
-    /**
-     * Show [android.widget.Toast] with long duration
-     */
-    fun Context.longToast(string: String) {
-        Utils.toast(this, string, false)
     }
 
     /**
      * Show [android.widget.Toast] with short duration
      */
-    fun Context.shortToast(string: String) {
+    fun Context.toast(string: String) {
         Utils.toast(this, string)
     }
 
-    fun Fragment.shortToast(@StringRes string: Int) {
+    fun Fragment.toast(@StringRes string: Int) {
         Utils.toast(requireContext(), requireContext().getString(string))
     }
 
-    fun Fragment.longToast(@StringRes string: Int) {
-        Utils.toast(requireContext(), requireContext().getString(string), false)
-    }
-
-    fun Fragment.shortToast(string: String) {
+    fun Fragment.toast(string: String) {
         Utils.toast(requireContext(), string)
-    }
-
-    fun Fragment.longToast(string: String) {
-        Utils.toast(requireContext(), string, false)
     }
 
     /**

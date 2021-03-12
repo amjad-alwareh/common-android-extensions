@@ -64,13 +64,13 @@ object Utils {
 
     fun getDrawable(context: Context, @DrawableRes id: Int): Drawable? = ContextCompat.getDrawable(context, id)
 
-    fun toast(context: Context, string: String, isShort: Boolean = true) {
-        Toast.makeText(context, string, if (isShort) Toast.LENGTH_SHORT else Toast.LENGTH_LONG).show()
+    fun toast(context: Context, string: String) {
+        Toast.makeText(context, string, Toast.LENGTH_SHORT).show()
     }
 
-    fun snackbar(view: View, text: String, shortDuration: Boolean, button: String, funct: () -> Unit) {
+    fun snackbar(view: View, text: String, shortDuration: Boolean, title: String, funct: () -> Unit) {
         Snackbar.make(view, text, if (shortDuration) Snackbar.LENGTH_SHORT else Snackbar.LENGTH_LONG)
-            .setAction(button) { funct() }
+            .setAction(title) { funct() }
             .show()
     }
 
